@@ -1,3 +1,6 @@
+import argparse
+import sys
+
 def move(t1, t2):
     t2.append(t1.pop())
 
@@ -30,10 +33,29 @@ if __name__ == '__main__':
     tower2 = []
     tower3 = []
 
-    #maybe put all of this in some menu/initialize function?
-    init_num_disks = int(input("Insert number of disks: "))
+    parser = argparse.ArgumentParser(description='Number of disks and game mode')
+    parser.add_argument('disks_nr',type=int,help='Choose the number of disks (3 or more)')
+    parser.add_argument('game_mode', type=int,help='Choose game mode: 1 for player vs player | 2 for player vs computer')
+
+    args = parser.parse_args()
+
+    if args.disks_nr < 3:
+        print('\n')
+        print('The minimum number of disks is 3, choose a bigger number')
+        print('\n')
+
+    if args.game_mode !=1 and args.game_mode !=2 :
+        print('\n')
+        print(args.game_mode,'is not a valid value for game mode, choose 1 or 2')
+        print('\n')
+        sys.exit()
+
+    init_num_disks = args.disks_nr
+
     for i in range(init_num_disks,1,-1):
         tower1.append(i)
-    #
+
+
+
 
     solve(tower1, tower2, tower3, init_num_disks)
