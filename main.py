@@ -43,6 +43,7 @@ if __name__ == '__main__':
         print('\n')
         print('The minimum number of disks is 3, choose a bigger number')
         print('\n')
+        sys.exit()
 
     if args.game_mode !=1 and args.game_mode !=2 :
         print('\n')
@@ -54,6 +55,61 @@ if __name__ == '__main__':
 
     for i in range(init_num_disks,1,-1):
         tower1.append(i)
+
+    if args.game_mode == 1:
+
+        render()
+
+        win = false
+        player = 1
+        num_moves = 0
+
+        while win == false:
+            print("Player", player, "moves \n")
+
+            ok = false
+
+            while ok == false
+                inp = int(input("Choose current tower (1 or 2 or 3) : "))
+
+                if inp == 1
+                    current = tower1
+                if inp == 2
+                    current = tower2
+                if inp == 3
+                    current = tower3
+
+                print("\n")
+                inp = input("Choose destination tower (1 or 2 or 3) : ")
+
+                if inp == 1
+                    dest = tower1
+                if inp == 2
+                    dest = tower2
+                if inp == 3
+                    dest = tower3
+
+                print("\n")
+
+                if current != dest
+                    if is_valid(current,dest) == true
+                        num_moves++
+                        ok = true
+                    else
+                        invalid_message1()
+                else
+                    invalid_message2()
+
+            render()
+
+            if len(tower3) == init_num_disks
+                win = true
+                print("Player", player, " won with ", num_moves, " moves! \n")
+                if player == 1
+                    player = 2
+                else
+                    player = 1
+
 
 
 
