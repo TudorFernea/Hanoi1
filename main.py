@@ -1,25 +1,74 @@
 import argparse
 import sys
 
+init_num_disks = 0
+
+tower1 = [10000]
+tower2 = [10000]
+tower3 = [10000]
+
+def renderdsk(i, t):
+    for j in range(0, init_num_disks * 2 + 1, ):
+        if j >= init_num_disks - t[i - 1] and j <= init_num_disks + t[i - 1]:
+            print('-', end='')
+        else:
+            print(' ', end='')
+
+def renderpole():
+    for j in range(0, init_num_disks * 2 + 1, 1):
+        if j == init_num_disks:
+            print('|', end='')
+        else:
+            print(' ', end='')
+
+def rendert(t,i):
+    if i <= len(t):
+        renderdsk(i, t)
+    else:
+        renderpole()
+
+
+
+
+def render():
+    for i in range(init_num_disks+1,1,-1):
+        rendert(tower1,i)
+        rendert(tower2,i)
+        rendert(tower3,i)
+        print('\n')
+    print('\n')
+
+
+def is_valid(t1, t2):
+    if t1[len(t1)-1] > t2[len(t2)-1]:
+        return False
+    return True
+
+def invalid_message1():
+    print('Invalid move, disk on top of destination must be bigger than disk on top of current tower \n')
+def invalid_message2():
+    print('Invalid move, destination and current towers must be different \n')
+
 def move(t1, t2):
     t2.append(t1.pop())
 
+
 def solve(t1, t2, t3, num_disks):
     if num_disks == 3:
-        move(t1,t3) #
-        render()    #
-        move(t1,t2) #
-        render()    #
-        move(t3,t2) #
-        render()    #
-        move(t1,t3) #change all these calls somewhat? looks kinda ugly/repetitive
-        render()    #if not then put render() inside move? but then I have a function that does 2 separate things :\
-        move(t2,t1) #
-        render()    #
-        move(t2,t3) #
-        render()    #
-        move(t1,t3) #
-        render()    #
+        move(t1,t3)
+        render()
+        move(t1,t2)
+        render()
+        move(t3,t2)
+        render()
+        move(t1,t3)
+        render()
+        move(t2,t1)
+        render()
+        move(t2,t3)
+        render()
+        move(t1,t3)
+        render()
 
     if num_disks > 3:
         solve(t1,t3,t2, num_disks - 1)
@@ -27,11 +76,58 @@ def solve(t1, t2, t3, num_disks):
         render()
 
 
+def game(player):
+    win = False
+    num_moves = 0
+    while win == False:
+        print("Player", player, "moves \n")
+
+        ok = False
+
+        while ok == False:
+            inp = int(input("Choose current tower (1 or 2 or 3) : "))
+
+            if inp == 1:
+                current = tower1
+            if inp == 2:
+                current = tower2
+            if inp == 3:
+                current = tower3
+
+            print("\n")
+            inp = int(input("Choose destination tower (1 or 2 or 3) : "))
+
+            if inp == 1:
+                dest = tower1
+            if inp == 2:
+                dest = tower2
+            if inp == 3:
+                dest = tower3
+
+            print("\n")
+
+            if current != dest:
+                if is_valid(current, dest) == True:
+                    move(current, dest)
+                    num_moves += 1
+                    ok = True
+                else:
+                    invalid_message1()
+            else:
+                invalid_message2()
+
+        render()
+
+        if len(tower3) == init_num_disks + 1:
+            win = True
+            print("Player", player, " finished with ", num_moves, " moves! \n")
+
+
 if __name__ == '__main__':
 
-    tower1 = []
-    tower2 = []
-    tower3 = []
+    tower1 = [100000]
+    tower2 = [100000]
+    tower3 = [100000]
 
     parser = argparse.ArgumentParser(description='Number of disks and game mode')
     parser.add_argument('disks_nr',type=int,help='Choose the number of disks (3 or more)')
@@ -53,65 +149,35 @@ if __name__ == '__main__':
 
     init_num_disks = args.disks_nr
 
-    for i in range(init_num_disks,1,-1):
+    for i in range(init_num_disks,0,-1):
         tower1.append(i)
 
     if args.game_mode == 1:
 
         render()
 
-        win = false
-        player = 1
         num_moves = 0
 
-        while win == false:
-            print("Player", player, "moves \n")
+        game(1)
+        score1 = num_moves
 
-            ok = false
+        tower1 = [100000]
+        tower2 = [100000]
+        tower3 = [100000]
 
-            while ok == false
-                inp = int(input("Choose current tower (1 or 2 or 3) : "))
+        for i in range(init_num_disks, 0, -1):
+            tower1.append(i)
 
-                if inp == 1
-                    current = tower1
-                if inp == 2
-                    current = tower2
-                if inp == 3
-                    current = tower3
-
-                print("\n")
-                inp = input("Choose destination tower (1 or 2 or 3) : ")
-
-                if inp == 1
-                    dest = tower1
-                if inp == 2
-                    dest = tower2
-                if inp == 3
-                    dest = tower3
-
-                print("\n")
-
-                if current != dest
-                    if is_valid(current,dest) == true
-                        num_moves++
-                        ok = true
-                    else
-                        invalid_message1()
-                else
-                    invalid_message2()
-
-            render()
-
-            if len(tower3) == init_num_disks
-                win = true
-                print("Player", player, " won with ", num_moves, " moves! \n")
-                if player == 1
-                    player = 2
-                else
-                    player = 1
+        render()
 
 
+        game(2)
+        score2 = num_moves
 
-
-
-    solve(tower1, tower2, tower3, init_num_disks)
+        if score1 >= score2:
+            print("Player 1 wins!",end='')
+        else:
+            print("Player 2 wins!",end='')
+        print(score1,'moves vs ',score2,'moves')
+    else:
+        solve(tower1, tower2, tower3, init_num_disks)
