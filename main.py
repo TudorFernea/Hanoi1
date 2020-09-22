@@ -54,26 +54,14 @@ def move(t1, t2):
 
 
 def solve(t1, t2, t3, num_disks):
-    if num_disks == 3:
+    if num_disks == 1:
         move(t1,t3)
         render()
-        move(t1,t2)
-        render()
-        move(t3,t2)
-        render()
-        move(t1,t3)
-        render()
-        move(t2,t1)
-        render()
-        move(t2,t3)
-        render()
-        move(t1,t3)
-        render()
-
-    if num_disks > 3:
+    if num_disks > 1:
         solve(t1,t3,t2, num_disks - 1)
         move(t1,t3)
         render()
+        solve(t2,t1,t3, num_disks - 1)
 
 
 def game(player):
