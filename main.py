@@ -73,7 +73,7 @@ def game(player):
     win = False
     num_moves = 0
     while win == False:
-        f"Player {player} moves \n"
+        print(f"Player {player} moves \n")
 
         ok = False
 
@@ -113,7 +113,8 @@ def game(player):
 
         if len(tower3) == init_num_disks + 1:
             win = True
-            f"Player {player} finished with {num_moves} moves \n"
+            print(f"Player {player} finished with {num_moves} moves \n")
+    return num_moves
 
 
 
@@ -133,13 +134,13 @@ if __name__ == '__main__':
 
     if args.disks_nr < 3:
         print('\n')
-        f"{args.disks_nr} is not a valid number of disks, minimum number of disks is 3"
+        print(f"{args.disks_nr} is not a valid number of disks, minimum number of disks is 3")
         print('\n')
         sys.exit()
 
     if args.game_mode !=1 and args.game_mode !=2 :
         print('\n')
-        f"{args.game_mode} is not a valid value for game mode, choose 1 or 2"
+        print(f"{args.game_mode} is not a valid value for game mode, choose 1 or 2")
         print('\n')
         sys.exit()
 
@@ -152,10 +153,7 @@ if __name__ == '__main__':
 
         render()
 
-        num_moves = 0
-
-        game(1)
-        score1 = num_moves
+        score1 = game(1)
 
         tower1 = [100000]
         tower2 = [100000]
@@ -166,14 +164,12 @@ if __name__ == '__main__':
 
         render()
 
-
-        game(2)
-        score2 = num_moves
+        score2 = game(2)
 
         if score1 >= score2:
             print("Player 1 wins!",end='')
         else:
             print("Player 2 wins!",end='')
-        f"{score1} moves vs {score2} moves"
+        print(f" {score1} moves vs {score2} moves")
     else:
         solve(tower1, tower2, tower3, init_num_disks)
