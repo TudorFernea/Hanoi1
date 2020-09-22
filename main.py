@@ -27,9 +27,6 @@ def rendert(t,i):
     else:
         renderpole()
 
-
-
-
 def render():
     for i in range(init_num_disks+1,1,-1):
         rendert(tower1,i)
@@ -39,19 +36,25 @@ def render():
     print('\n')
 
 
+
+
 def is_valid(t1, t2):
     if t1[len(t1)-1] > t2[len(t2)-1]:
         return False
     return True
+
+
 
 def invalid_message1():
     print('Invalid move, disk on top of destination must be bigger than disk on top of current tower \n')
 def invalid_message2():
     print('Invalid move, destination and current towers must be different \n')
 
+
+
+
 def move(t1, t2):
     t2.append(t1.pop())
-
 
 def solve(t1, t2, t3, num_disks):
     if num_disks == 1:
@@ -64,11 +67,13 @@ def solve(t1, t2, t3, num_disks):
         solve(t2,t1,t3, num_disks - 1)
 
 
+
+
 def game(player):
     win = False
     num_moves = 0
     while win == False:
-        print("Player", player, "moves \n")
+        f"Player {player} moves \n"
 
         ok = False
 
@@ -108,7 +113,10 @@ def game(player):
 
         if len(tower3) == init_num_disks + 1:
             win = True
-            print("Player", player, " finished with ", num_moves, " moves! \n")
+            f"Player {player} finished with {num_moves} moves \n"
+
+
+
 
 
 if __name__ == '__main__':
@@ -125,13 +133,13 @@ if __name__ == '__main__':
 
     if args.disks_nr < 3:
         print('\n')
-        print('The minimum number of disks is 3, choose a bigger number')
+        f"{args.disks_nr} is not a valid number of disks, minimum number of disks is 3"
         print('\n')
         sys.exit()
 
     if args.game_mode !=1 and args.game_mode !=2 :
         print('\n')
-        print(args.game_mode,'is not a valid value for game mode, choose 1 or 2')
+        f"{args.game_mode} is not a valid value for game mode, choose 1 or 2"
         print('\n')
         sys.exit()
 
@@ -166,6 +174,6 @@ if __name__ == '__main__':
             print("Player 1 wins!",end='')
         else:
             print("Player 2 wins!",end='')
-        print(score1,'moves vs ',score2,'moves')
+        f"{score1} moves vs {score2} moves"
     else:
         solve(tower1, tower2, tower3, init_num_disks)
